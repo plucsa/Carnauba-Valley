@@ -1,0 +1,17 @@
+{
+  "name": "carnaubavalley-clone",
+  "version": "1.0.0",
+  "description": "Clone do site Carnaúba Valley",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server",
+    "build": "echo 'Build script not defined'",
+    "test": "echo 'Test script not defined'"
+  },
+  "author": "Seu Nome",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
