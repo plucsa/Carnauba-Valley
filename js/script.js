@@ -91,3 +91,31 @@
             showSlide(0);
         });
       })();
+
+      // Back to top button
+      (function () {
+        const backToTopButton = document.getElementById("backToTop");
+        const topbar = document.getElementById("siteTopbar");
+
+        if (!backToTopButton || !topbar) return;
+
+        const offset = topbar.offsetHeight;
+
+        function toggleBackToTopButton() {
+          if (window.pageYOffset > offset) {
+            backToTopButton.classList.add("visible");
+          } else {
+            backToTopButton.classList.remove("visible");
+          }
+        }
+
+        function scrollToTop() {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        window.addEventListener("scroll", toggleBackToTopButton);
+        backToTopButton.addEventListener("click", scrollToTop);
+
+        // Initial check
+        toggleBackToTopButton();
+      })();

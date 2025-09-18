@@ -568,8 +568,8 @@ html,body { height: 100%; font-family: Inter, "Segoe UI", Roboto, Arial, sans-se
   bottom: 18px;
   width:44px;
   height:44px;
-  border-radius:8px;
-  background: var(--olive-dark);
+  border-radius:50%;
+  background: rgba(239, 192, 50, 0.9);
   color:#fff;
   border: none;
   display:flex;
