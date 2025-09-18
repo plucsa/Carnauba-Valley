@@ -1,4 +1,4 @@
-# Carnaúba Valley Clone
+# Carnaúba Valley 
 
 Este projeto é uma réplica do site Carnaúba Valley, que visa apresentar uma comunidade de inovação no sertão nordestino. O site é composto por várias seções que destacam a missão, a comunidade, o blog e as informações de contato.
 
