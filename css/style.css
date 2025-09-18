@@ -14,15 +14,9 @@ html,body { height: 100%; font-family: Inter, "Segoe UI", Roboto, Arial, sans-se
   --text-dark: #222;
   --muted: #f5f4f0;
   --logo-h: 96px;
+  --logo-w: 180px; /* Ajustado */
   --topbar-h: calc(var(--logo-h) + 24px);
   --max-w: 1200px;
-
-  /* cor da marca solicitada */
-  --brand-green: #5D5B0E;
-
-  /* Garante altura fixa do topbar (transparente ou não) e mantém layout estável */
-  --topbar-h: 120px;
-  --logo-h: 96px;
 }
 
 /* Força uso da cor da marca onde necessário (maior especificidade) */
@@ -64,7 +58,11 @@ html,body { height: 100%; font-family: Inter, "Segoe UI", Roboto, Arial, sans-se
 }
 
 /* Logo versão para topbar (use assets/img/logo-top.png ou ajuste) */
-.logo-top { height:96px; display:block; }
+.logo-top { 
+  display:block; 
+  width: var(--logo-w) !important;
+  height: auto !important;
+}
 
 /* Header */
 .header{
@@ -499,12 +497,15 @@ html,body { height: 100%; font-family: Inter, "Segoe UI", Roboto, Arial, sans-se
   margin-bottom: 28px;
   font-weight: 700;
 }
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 28px;
+.testimonial-slider {
+  position: relative;
+  overflow: hidden;
   max-width: 1100px;
   margin: 0 auto 18px;
+}
+.testimonials-grid {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
 }
 .testimonial {
   background: #fff;
@@ -515,6 +516,9 @@ html,body { height: 100%; font-family: Inter, "Segoe UI", Roboto, Arial, sans-se
   flex-direction:column;
   justify-content:space-between;
   min-height: 220px;
+  width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
 }
 .testimonial-quote {
   font-style: normal;
@@ -623,8 +627,8 @@ html,body { height: 100%; font-family: Inter, "Segoe UI", Roboto, Arial, sans-se
 
 /* botões sociais quadrados como na foto */
 .social-btn {
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   border-radius: 8px;
   background: rgba(255,255,255,0.12);
   display: inline-flex;
@@ -634,7 +638,7 @@ html,body { height: 100%; font-family: Inter, "Segoe UI", Roboto, Arial, sans-se
   text-decoration: none;
   transition: transform .18s ease, background .18s ease;
 }
-.social-btn i { font-size: 16px; }
+.social-btn i { font-size: 20px; }
 .social-btn:hover {
   transform: translateY(-3px);
   background: rgba(255,255,255,0.18);
@@ -663,22 +667,15 @@ html,body { height: 100%; font-family: Inter, "Segoe UI", Roboto, Arial, sans-se
 }
 
 /* Normaliza tamanho das logos: header (logo-cv) e footer (logo-branca) */
-:root {
-  --logo-h: 96px; /* ajuste se quiser outro tamanho (ex.: 80px) */
-}
 
 /* Remove escalas anteriores e força mesma altura para ambas as logos */
 .logo-top,
 .footer-left .footer-logo,
 .footer-logo {
   height: var(--logo-h) !important;
-  max-height: var(--logo-h) !important;
-  width: auto !important;
-  display: block !important;
+  width: var(--logo-w) !important;
   object-fit: contain !important;
-  transform: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  display: block !important;
 }
 
 /* Garante que o container do header acompanhe a altura sem aumentar visual */
@@ -705,9 +702,12 @@ html,body { height: 100%; font-family: Inter, "Segoe UI", Roboto, Arial, sans-se
 
 /* responsividade */
 @media (max-width: 900px){
+  :root {
+    --logo-h: 64px;
+    --logo-w: 160px;
+  }
   .topbar-inner{ height:80px; }
   .header-inner{ height:80px; }
-  .logo-top{ height:60px; }
   .footer-left .footer-logo{ height:64px; max-height:64px; }
 }
 @media (max-width: 980px){
@@ -771,20 +771,7 @@ a{ color:inherit; }
   --logo-h: 96px; /* ajuste global de altura das logos */
 }
 
-.logo-top,
-.footer-left .footer-logo,
-.footer-logo {
-  height: var(--logo-h) !important;
-  max-height: var(--logo-h) !important;
-  width: auto !important;
-  display: block !important;
-  object-fit: contain !important;
-  transform: none !important;
-  margin: 0;
-  padding: 0;
-  background: transparent !important;
-  filter: none !important;
-}
+
 
 /* garante contraste dos links quando a topbar estiver transparente */
 .topbar.topbar--transparent .nav ul li a{
@@ -803,10 +790,6 @@ a{ color:inherit; }
 }
 
 /* header transição transparente <-> branco */
-:root{
-  --logo-h: 80px;                /* ajuste o tamanho das logos */
-  --topbar-h: calc(var(--logo-h) + 24px);
-}
 
 /* base do topbar (fixo) */
 .topbar {
@@ -876,13 +859,8 @@ a{ color:inherit; }
 
 /* estado sólido (após rolar) */
 .topbar--solid {
-  /* leve translucidez para manter continuidade visual com o hero */
-  background: rgba(255,255,255,0.92) !important;
-  /* leve desfoque para suavizar sobreposição */
-  backdrop-filter: blur(4px);
-  /* borda bem sutil */
+  background: rgba(239, 192, 50, 0.9) !important;
   border-bottom: 1px solid rgba(0,0,0,0.04);
-  /* sombra mais suave e curta para reduzir "peso" visual */
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
   transition: background .28s ease, box-shadow .28s ease, border-color .28s ease;
 }
@@ -927,11 +905,6 @@ a{ color:inherit; }
 
 /* Estado sólido: apenas muda o fundo e as cores internas,
    sem alterar qualquer parâmetro de tamanho/posicionamento do transparente */
-.topbar--solid {
-  background: rgba(255,255,255,0.96) !important; /* só o fundo muda */
-  /* sombra leve para diferenciar visualmente, não afeta altura */
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06) !important;
-}
 
 /* Cores internas controladas separadamente (sem tocar em espaçamentos) */
 .topbar--solid .nav ul li a { color: rgba(0,0,0,0.85) !important; }
@@ -969,42 +942,17 @@ a{ color:inherit; }
 
 /* Override: remover header branco — manter somente topbar transparente */
 
-:root {
-  --logo-h: 96px;
-  --topbar-h: calc(var(--logo-h) + 24px);
-}
-
-/* garante mesma altura e que o header fique sempre transparente */
-.topbar,
-.topbar--transparent,
-.topbar--solid {
-  height: var(--topbar-h) !important;
-  min-height: var(--topbar-h) !important;
-  background: transparent !important;
-  border-top: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
-}
-
 /* mantém container alinhado */
 .header-inner { height: var(--topbar-h) !important; align-items:center; }
 
 /* logo e ícones visíveis sobre a imagem */
-.logo-top,
-.footer-left .footer-logo,
-.footer-logo {
-  height: var(--logo-h) !important;
-  max-height: var(--logo-h) !important;
-  object-fit: contain !important;
-}
+
 
 /* links e toggle em branco para contraste */
 .topbar .nav ul li a { color: #fff !important; }
 .topbar .mobile-toggle .bar { background: #fff !important; }
 
 /* evita qualquer script que tente trocar estado visual (proteção adicional) */
-.topbar--solid { background: transparent !important; box-shadow: none !important; }
-.topbar--transparent { background: transparent !important; }
 
 /* preserva espaço do hero (não altera comportamento atual) */
 .hero { padding-top: var(--topbar-h) !important; }
@@ -1015,4 +963,7 @@ a{ color:inherit; }
   .header-inner{ height:var(--topbar-h) !important; }
   .topbar .nav { display: none; } /* mobile usa o menu existente */
   .topbar .mobile-toggle { display: block; }
+}
+.logo-top {
+  width: 180px !important;
 }

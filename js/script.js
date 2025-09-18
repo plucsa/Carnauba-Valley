@@ -1,22 +1,16 @@
-      (function () {
+(function () {
         const topbar = document.getElementById("siteTopbar");
-        const logoImg = document.querySelector(".logo-top");
         const THRESHOLD = 40; // px para iniciar a transição
 
         if (!topbar) return;
-
-        const srcWhite = logoImg?.dataset?.srcWhite;
-        const srcDark = logoImg?.dataset?.srcDark || logoImg?.src;
 
         function updateHeader() {
           if (window.scrollY > THRESHOLD) {
             topbar.classList.add("topbar--solid");
             topbar.classList.remove("topbar--transparent");
-            if (logoImg && srcDark) logoImg.src = srcDark;
           } else {
             topbar.classList.remove("topbar--solid");
             topbar.classList.add("topbar--transparent");
-            if (logoImg && srcWhite) logoImg.src = srcWhite;
           }
         }
 
@@ -40,4 +34,60 @@
             })
           );
         }
+      })();
+
+      // Testimonial Slider
+      (function () {
+        const slider = document.querySelector('.testimonial-slider');
+        if (!slider) return;
+
+        const grid = document.querySelector('.testimonials-grid');
+        const items = grid.querySelectorAll('.testimonial');
+        const dotsContainer = document.querySelector('.testimonial-dots');
+        const dots = dotsContainer.querySelectorAll('.dot');
+
+        let currentIndex = 0;
+        const totalItems = items.length;
+        const slideInterval = 5000; // 5 seconds
+
+        function showSlide(index) {
+          grid.style.transform = `translateX(-${index * 100}%)`;
+
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
+        }
+
+        function nextSlide() {
+          currentIndex = (currentIndex + 1) % totalItems;
+          showSlide(currentIndex);
+        }
+
+        // Auto-play
+        let autoPlay = setInterval(nextSlide, slideInterval);
+
+        // Pause on hover
+        slider.addEventListener('mouseenter', () => {
+          clearInterval(autoPlay);
+        });
+
+        slider.addEventListener('mouseleave', () => {
+          autoPlay = setInterval(nextSlide, slideInterval);
+        });
+
+        // Dots navigation
+        dots.forEach((dot, i) => {
+          dot.addEventListener('click', () => {
+            currentIndex = i;
+            showSlide(currentIndex);
+            // Reset interval
+            clearInterval(autoPlay);
+            autoPlay = setInterval(nextSlide, slideInterval);
+          });
+        });
+
+        // Initial setup
+        document.addEventListener("DOMContentLoaded", () => {
+            showSlide(0);
+        });
       })();
